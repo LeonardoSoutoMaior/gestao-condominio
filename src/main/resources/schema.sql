@@ -22,23 +22,22 @@ CREATE TABLE IF NOT EXISTS usuario(
     senha VARCHAR(50)
 );
 
-CREATE TABLE IF NOT EXISTS tarefa(
+CREATE TABLE IF NOT EXISTS tarefa (
     id_tarefa UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
-    nome VARCHAR(50)
-    descricao VARCHAR(600)
-    data_inicio DATE DEFAULT CURRENT_DATE
-    data_termino DATE
-    prioridade VARCHAR(45) CHECK (prioridade IN ('alta', 'media', 'baixa'))
-    status VARCHAR(45) CHECK (status IN ('pendente', 'em andamento', 'concluido'))
+    nome VARCHAR(50) NOT NULL,
+    descricao VARCHAR(600),
+    data_inicio DATE DEFAULT CURRENT_DATE,
+    data_termino DATE,
+    prioridade VARCHAR(45) CHECK (prioridade IN ('alta', 'media', 'baixa')),
+    status VARCHAR(45) CHECK (status IN ('pendente', 'em andamento', 'concluido')),
     id_condominio UUID NOT NULL,
     id_usuario UUID NOT NULL,
-    PRIMARY KEY (id_tarefa, id_condominio, id_usuario)
-    FOREIGN KEY (id_condominio) REFERENCES condominio(id_condominio)
+    FOREIGN KEY (id_condominio) REFERENCES condominio(id_condominio),
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 );
 
 CREATE TABLE IF NOT EXISTS ocorrencia(
-    id_ocorrencia UUID RANDOM_UUID() PRIMARY KEY
+    id_ocorrencia UUID DEFAULT RANDOM_UUID() PRIMARY KEY
     nome VARCHAR(50) NOT NULL
     descricao VARCHAR(200)
     data_inicio DATE DEFAULT CURRENT_DATE
@@ -94,7 +93,7 @@ CREATE TABLE IF NOT EXISTS fornecedor(
     nome VARCHAR(100)
     servico_prestado VARCHAR(50)
     contato VARCHAR(15)
-    avaliacao(10)
+    avaliacao INT(10)
     id_condominio UUID NOT NULL
     FOREIGN KEY (id_condominio) REFERENCES condominio(id_condominio)
 )
