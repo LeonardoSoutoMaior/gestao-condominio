@@ -6,10 +6,10 @@ import com.example.gestao.repositories.CondominioRepository;
 import com.example.gestao.service.CondominioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/condominio")
@@ -25,5 +25,23 @@ public class CondominioController {
     public ResponseEntity<Condominio> criarCondominio(@RequestBody CondominioRequestPayload payload){
         Condominio novoCondominio = this.condominioService.criarCondominio(payload);
         return ResponseEntity.ok(novoCondominio);
+    }
+
+    @GetMapping("/todosCondominios")
+    public ResponseEntity<List<Condominio>> retornaCondominios(){
+        List<Condominio> condominios = condominioRepository.findAll();
+        return ResponseEntity.ok(condominios);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Condominio> atualizaCondominio(@PathVariable UUID id, @RequestBody CondominioRequestPayload payload){
+        Condominio condominioAtualizado = condominioService.atualizarcondominio(id,payload);
+        return ResponseEntity.ok(condominioAtualizado);
+    }
+
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<Void> deletarCondominio(@PathVariable UUID id){
+        condominioService.deletarCondominio(id);
+        return ResponseEntity.noContent().build();
     }
 }

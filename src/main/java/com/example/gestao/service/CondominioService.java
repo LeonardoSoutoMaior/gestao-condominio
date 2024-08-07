@@ -4,7 +4,10 @@ import com.example.gestao.domain.condominio.Condominio;
 import com.example.gestao.domain.condominio.CondominioRequestPayload;
 import com.example.gestao.repositories.CondominioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class CondominioService {
@@ -30,5 +33,22 @@ public class CondominioService {
         return condominioRepository.save(novoCondominio);
     }
 
+    public Condominio atualizarcondominio(UUID id, CondominioRequestPayload payload){
 
+        Condominio condominioExistente = condominioRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Condomínio não encontrado!"));
+        condominioExistente.setNome(payload.nome());
+        condominioExistente.setEndereco(payload.endereco());
+        condominioExistente.setQuantidadeDeUnidades(payload.quantidadeDeUnidades());
+
+        return condominioRepository.save(condominioExistente);
+    }
+
+    public void deletarCondominio(UUID id){
+        try{
+            condominioRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e){
+            throw new IllegalArgumentException("Condomínio não encontrado!");
+        }
+    }
 }
