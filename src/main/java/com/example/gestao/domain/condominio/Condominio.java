@@ -28,5 +28,5 @@ public class Condominio {
     private String endereco;
 
     @Column(name = "quantidade_de_unidades")
-    private Integer quantidadeDeUnidades;
+    private int quantidadeDeUnidades;
 }
