@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/unidades")
@@ -29,5 +30,17 @@ public class UnidadeController {
     public ResponseEntity<List<Unidade>> retornaUnidades(){
         List<Unidade> unidades = unidadeRepository.findAll();
         return ResponseEntity.ok(unidades);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Unidade> atualizaUnidade(@PathVariable UUID id, @RequestBody Unidade unidade){
+        Unidade unidadeAtualizada = unidadeService.atualizarUnidade(id, unidade);
+        return ResponseEntity.ok(unidadeAtualizada);
+    }
+
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<Void> deletarUnidade(@PathVariable UUID id){
+        unidadeService.deletarUnidade(id);
+        return ResponseEntity.noContent().build();
     }
 }
