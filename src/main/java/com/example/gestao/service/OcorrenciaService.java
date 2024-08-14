@@ -10,7 +10,9 @@ import com.example.gestao.repositories.UnidadeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class OcorrenciaService {
@@ -43,6 +45,13 @@ public class OcorrenciaService {
         return ocorrenciaRepository.save(ocorrencia);
     }
 
+    public Ocorrencia buscarOcorrenciaPorId(UUID id){
+        return ocorrenciaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Ocorrencia não encontrada"));
+    }
 
+    public List<Ocorrencia> listarOcorrencias(){
+        return ocorrenciaRepository.findAll();
+    }
 
 }
