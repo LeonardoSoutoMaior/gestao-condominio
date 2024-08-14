@@ -54,4 +54,21 @@ public class OcorrenciaService {
         return ocorrenciaRepository.findAll();
     }
 
+    public Ocorrencia atualizarOcorrencia(UUID id, OcorrenciaDTO ocorrenciaDTO){
+        Ocorrencia ocorrenciaExistente = buscarOcorrenciaPorId(id);
+
+        ocorrenciaExistente.setNome(ocorrenciaDTO.getNome());
+        ocorrenciaExistente.setDescricao(ocorrenciaDTO.getDescricao());
+        ocorrenciaExistente.setDataInicio(ocorrenciaDTO.getDataInicio());
+        ocorrenciaExistente.setDataTermino(ocorrenciaDTO.getDataTermino());
+        ocorrenciaExistente.setStatus(ocorrenciaDTO.getStatus());
+
+        return ocorrenciaRepository.save(ocorrenciaExistente);
+    }
+
+    public void deletarOcorrencia(UUID id){
+        Ocorrencia ocorrencia = buscarOcorrenciaPorId(id);
+        ocorrenciaRepository.delete(ocorrencia);
+    }
+
 }
