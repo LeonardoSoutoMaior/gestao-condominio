@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UsuarioService {
@@ -22,5 +23,16 @@ public class UsuarioService {
             throw new IllegalArgumentException("Este email já esta em uso");
         }
         return usuarioRepository.save(usuario);
+    }
+
+    public void deletarUsuario(UUID id){
+        Optional<Usuario> usuarioExistente = usuarioRepository.findById(id);
+
+        Usuario usuario = usuarioExistente.get();
+
+        if (!usuarioExistente.isPresent()){
+            throw new IllegalArgumentException("Usuario não existe");
+        }
+        usuarioRepository.delete(usuario);
     }
 }
