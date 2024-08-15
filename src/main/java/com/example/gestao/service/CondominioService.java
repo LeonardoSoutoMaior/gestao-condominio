@@ -33,6 +33,11 @@ public class CondominioService {
         return condominioRepository.save(novoCondominio);
     }
 
+    public Condominio buscarCondominioPorId(UUID id){
+        return condominioRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Condominio não encontrado"));
+    }
+
     public Condominio atualizarcondominio(UUID id, CondominioRequestPayload payload){
 
         Condominio condominioExistente = condominioRepository.findById(id)
