@@ -1,7 +1,10 @@
 package com.example.gestao.domain.tarefa;
 
+import com.example.gestao.config.PrioridadeDeserializer;
+import com.example.gestao.config.StatusDeserializer;
 import com.example.gestao.domain.condominio.Condominio;
 import com.example.gestao.domain.usuario.Usuario;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -54,10 +57,12 @@ public class Tarefa {
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
+    @JsonDeserialize(using = PrioridadeDeserializer.class)
     public enum Prioridade {
         ALTA, MEDIA, BAIXA
     }
 
+    @JsonDeserialize(using = StatusDeserializer.class)
     public enum Status {
         PENDENTE, EM_ANDAMENTO, CONCLUIDO
     }
