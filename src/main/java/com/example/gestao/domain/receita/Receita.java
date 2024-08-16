@@ -20,7 +20,7 @@ public class Receita {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_reuniao")
+    @Column(name = "id_receita")
     private UUID id;
 
     @Column(name = "descricao")
