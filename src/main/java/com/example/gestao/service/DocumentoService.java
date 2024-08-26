@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -38,5 +39,9 @@ public class DocumentoService {
         documento.setCondominio(condominio);
 
         return documentoRepository.save(documento);
+    }
+
+    public List<Documento> listarDocumentos(){
+        return documentoRepository.findAll();
     }
 }
